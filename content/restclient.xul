@@ -43,28 +43,28 @@
   </toolbox>
 
   <groupbox>
-  	<caption label="&restclient.request.title;"/>
-		<hbox>
-			<label value="&restclient.method;" />
-			<menulist id="requestMethod" label="&restclient.method;" style="height:24px" editable="true">
-			  <menupopup>
-			    <menuitem id="requestMethod_GET" label="GET" selected="true"/>
-			    <menuitem label="POST"/>
-			    <menuitem label="PUT"/>
-			    <menuitem label="DELETE"/>
-			    <menuitem label="HEAD"/>
-			    <menuitem label="OPTIONS"/>
-			    <menuitem label="TRACE"/>
-			    <menuitem label="PROPFIND"/>
-			    <menuitem label="PROPPATCH"/>
-			    <menuitem label="MKCOL"/>
-			    <menuitem label="COPY"/>
-			    <menuitem label="MOVE"/>
-			    <menuitem label="LOCK"/>
-			    <menuitem label="UNLOCK"/>
-			  </menupopup>
-			</menulist>
-			<textbox id="tbRequestUrl"
+    <caption label="&restclient.request.title;"/>
+    <hbox>
+      <label value="&restclient.method;" />
+      <menulist id="requestMethod" label="&restclient.method;" style="height:24px" editable="true">
+        <menupopup>
+          <menuitem id="requestMethod_GET" label="GET" selected="true"/>
+          <menuitem label="POST"/>
+          <menuitem label="PUT"/>
+          <menuitem label="DELETE"/>
+          <menuitem label="HEAD"/>
+          <menuitem label="OPTIONS"/>
+          <menuitem label="TRACE"/>
+          <menuitem label="PROPFIND"/>
+          <menuitem label="PROPPATCH"/>
+          <menuitem label="MKCOL"/>
+          <menuitem label="COPY"/>
+          <menuitem label="MOVE"/>
+          <menuitem label="LOCK"/>
+          <menuitem label="UNLOCK"/>
+        </menupopup>
+      </menulist>
+      <textbox id="tbRequestUrl"
           flex="8"
           type="autocomplete"
           autocompletesearch="form-history"
@@ -75,83 +75,83 @@
           showcommentcolumn="false"
           enablehistory="true"
           maxrows="10"
-					cols = "5"
-					width="1"
-					size="5"
-					onkeypress="return restclient.checkEnterKeyPress(event);"
+          cols = "5"
+          width="1"
+          size="5"
+          onkeypress="return restclient.checkEnterKeyPress(event);"
                     ontextentered="return restclient.updateOAuthAuthorizationHeader();"
                     onchange="return restclient.updateOAuthAuthorizationHeader();"
-					>
-			</textbox>
+          >
+      </textbox>
 
-			<button id="btnSend" label="&restclient.send;" onclick="restclient.doRequest();" />
-		</hbox>
-		<separator class="thin" flex="1" />
-	<grid flex="3">
-	  <columns>
-	    <column/>
-	    <column flex="3" />
-	  </columns>
-	  <rows>
-	  	<row>
-				<caption label="&restclient.header.title;"/>
-				<tree id="headerList" flex="1" height="90" seltype="multiple"
-         		      enableColumnDrag="true" disableKeyNavigation="true" editable="true"
-         		      onkeypress="restclient.checkDeleteKeyPress(event)"
-         		      >
+      <button id="btnSend" label="&restclient.send;" onclick="restclient.doRequest();" />
+    </hbox>
+    <separator class="thin" flex="1" />
+  <grid flex="3">
+    <columns>
+      <column/>
+      <column flex="3" />
+    </columns>
+    <rows>
+      <row>
+        <caption label="&restclient.header.title;"/>
+        <tree id="headerList" flex="1" height="90" seltype="multiple"
+                   enableColumnDrag="true" disableKeyNavigation="true" editable="true"
+                   onkeypress="restclient.checkDeleteKeyPress(event)"
+                   >
           <treecols>
-         	  <treecol id="columnName" label="&header.list.name;" flex="1" persist="width ordinal hidden" editable="true"/>
-         		<splitter class="tree-splitter"/>
-         		<treecol id="columnValue" label="&header.list.value;" flex="5" persist="width ordinal hidden" editable="true"/>
-         	</treecols>
-         	<treechildren id="reqHeaderChilds"/>
+             <treecol id="columnName" label="&header.list.name;" flex="1" persist="width ordinal hidden" editable="true"/>
+             <splitter class="tree-splitter"/>
+             <treecol id="columnValue" label="&header.list.value;" flex="5" persist="width ordinal hidden" editable="true"/>
+           </treecols>
+           <treechildren id="reqHeaderChilds"/>
         </tree>
-	  	</row>
-	  	<separator class="thin" flex="1" />
-	    <row flex="3" >
-				<caption label="&restclient.body.title;"/>
-	  		<textbox id="tbRequestBody" flex="3" multiline="true" minheight="150px" oninput="restclient.requestBodyChange();"/>
-	  	</row>
-  	</rows>
-	</grid>
-	</groupbox>
+      </row>
+      <separator class="thin" flex="1" />
+      <row flex="3" >
+        <caption label="&restclient.body.title;"/>
+        <textbox id="tbRequestBody" flex="3" multiline="true" minheight="150px" oninput="restclient.requestBodyChange();"/>
+      </row>
+    </rows>
+  </grid>
+  </groupbox>
 
-	<splitter id="detail-comment" collapse="after" resizeafter="grow" />
-		<tabbox flex="1">
-		  <tabs>
-		    <tab label="&restclient.response.header;" id="responseHeaderLabel"/>
-		    <tab label="&restclient.response.body;" id="responseRawLabel"/>
-		    <tab label="&restclient.response.bodyXML;" id="responseParsedLabel"/>
-		  </tabs>
-		  <tabpanels flex="3">
-		    <tabpanel id="httpheaders">
-			    <tree id="headerInfo" width="375" height="170" seltype="multiple" flex="1"
-	         		      enableColumnDrag="false" disableKeyNavigation="true" editable="false">
-	          <treecols>
-	         	  <treecol id="columnHttpHeader" label="&restclient.response.header.col;" flex="1" persist="width ordinal hidden"/>
-	         	</treecols>
-	         	<treechildren id="headerChilds" />
-	        </tree>
-		    </tabpanel>
-		    <tabpanel flex="1">
-		    	<textbox id="responseBody" multiline="true" flex="1"/>
-		    </tabpanel>
-		    <tabpanel id="xmlContent" orient="vertical" class="overflow_01">
-		    </tabpanel>
-		  </tabpanels>
-		</tabbox>
-	</vbox>
-	<statusbar id="mab-status-bar">
-  	<statusbarpanel id="record-status" flex="2"/>
+  <splitter id="detail-comment" collapse="after" resizeafter="grow" />
+    <tabbox flex="1">
+      <tabs>
+        <tab label="&restclient.response.header;" id="responseHeaderLabel"/>
+        <tab label="&restclient.response.body;" id="responseRawLabel"/>
+        <tab label="&restclient.response.bodyXML;" id="responseParsedLabel"/>
+      </tabs>
+      <tabpanels flex="3">
+        <tabpanel id="httpheaders">
+          <tree id="headerInfo" width="375" height="170" seltype="multiple" flex="1"
+                     enableColumnDrag="false" disableKeyNavigation="true" editable="false">
+            <treecols>
+               <treecol id="columnHttpHeader" label="&restclient.response.header.col;" flex="1" persist="width ordinal hidden"/>
+             </treecols>
+             <treechildren id="headerChilds" />
+          </tree>
+        </tabpanel>
+        <tabpanel flex="1">
+          <textbox id="responseBody" multiline="true" flex="1"/>
+        </tabpanel>
+        <tabpanel id="xmlContent" orient="vertical" class="overflow_01">
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+  </vbox>
+  <statusbar id="mab-status-bar">
+    <statusbarpanel id="record-status" flex="2"/>
     <statusbarpanel id="out-status" flex="1"/>
-  	<statusbarpanel>
+    <statusbarpanel>
           <label id="timeTakenLabel"/>
     </statusbarpanel>
-  	<statusbarpanel>
+    <statusbarpanel>
           <label id="bytesLabel"/>
     </statusbarpanel>
-  	<statusbarpanel>
-  			<progressmeter id="meter" value="0" mode="determined"/>
-  	</statusbarpanel>
+    <statusbarpanel>
+        <progressmeter id="meter" value="0" mode="determined"/>
+    </statusbarpanel>
   </statusbar>
 </window>
