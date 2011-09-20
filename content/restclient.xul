@@ -115,13 +115,13 @@
       <row>
         <caption label="&restclient.cookies.title;"/>
         <tree id="cookieList" flex="1" height="90" seltype="multiple"
-                   enableColumnDrag="true" disableKeyNavigation="true" editable="true"
+                   enableColumnDrag="true" disableKeyNavigation="true" editable="false"
                    onkeypress="restclient.checkDeleteKeyPressCookies(event)"
                    >
           <treecols>
-             <treecol id="columnName" label="&cookie.list.name;" flex="1" persist="width ordinal hidden" editable="true"/>
+             <treecol id="columnName" label="&cookie.list.name;" flex="1" persist="width ordinal hidden" editable="false"/>
              <splitter class="tree-splitter"/>
-             <treecol id="columnValue" label="&cookie.list.value;" flex="5" persist="width ordinal hidden" editable="true"/>
+             <treecol id="columnValue" label="&cookie.list.value;" flex="5" persist="width ordinal hidden" editable="false"/>
            </treecols>
            <treechildren id="reqCookieChildren"/>
         </tree>
