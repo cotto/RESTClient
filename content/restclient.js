@@ -20,10 +20,20 @@ var restclient = {
     return true;
 	},
 
-	checkDeleteKeyPress: function(evt){
+	checkDeleteKeyPressHeader: function(evt){
 		switch( evt.keyCode ){
 			case 46:
 				restclient.deleteSelectedHeader();
+				break;
+			default:
+				break;
+		}
+	},
+
+	checkDeleteKeyPressCookies: function(evt){
+		switch( evt.keyCode ){
+			case 46:
+				restclient.deleteSelectedCookie();
 				break;
 			default:
 				break;
@@ -37,6 +47,17 @@ var restclient = {
       for (var i=reqHeaderChilds.childNodes.length-1 ; i>=0 ; i--) {
          if (headerList.view.selection.isSelected(i))
             reqHeaderChilds.removeChild(reqHeaderChilds.childNodes[i]);
+      }
+    }
+	},
+
+	deleteSelectedCookie: function(){
+	  var cookieList = $('cookieList');
+    var reqCookieChildren = $('reqCookieChildren');
+    if (cookieList.view.selection.count > 0 && cookieList.editingRow < 0) {
+      for (var i = reqCookieChildren.childNodes.length-1 ; i>=0 ; i--) {
+         if (cookieList.view.selection.isSelected(i))
+            reqCookieChildren.removeChild(reqCookieChildren.childNodes[i]);
       }
     }
 	},
@@ -249,6 +270,27 @@ var restclient = {
     return null;
 	},
   
+	addCookie: function(cookieKey, cookieValue){
+  	var reqCookieChildren = $('reqCookieChildren');
+  	var item = document.createElement('treeitem');
+  	var row = document.createElement('treerow');
+ 		var c1 = document.createElement('treecell');
+ 		var c2 = document.createElement('treecell');
+  	c1.setAttribute('label', cookieKey);
+  	c2.setAttribute('label', cookieValue);
+  	row.appendChild(c1);
+  	row.appendChild(c2);
+  	item.appendChild(row);
+  	reqCookieChildren.appendChild(item);
+  	return (reqCookieChildren.childNodes.length-1);
+	},
+
+	clearCookies: function(){
+  	var reqCookieChildren = $('reqCookieChildren');
+    while (reqCookieChildren.firstChild)
+      reqCookieChildren.removeChild(reqCookieChildren.firstChild);
+	},
+  
 
   saveHistory: function(strName, strUrl){
     var gFormHistory = Components.classes["@mozilla.org/satchel/form-history;1"].getService(Components.interfaces.nsIFormHistory ?
@@ -357,6 +399,23 @@ var restclient = {
       $('responseRawLabel').label = this._stringBundle.getString(handler.rawTabLabelKey);
       $('responseParsedLabel').label = this._stringBundle.getString(handler.parsedTabLabelKey);
 
+      var requestURI = Components.classes["@mozilla.org/network/io-service;1"]
+        .getService(Components.interfaces.nsIIOService)
+        .newURI($("tbRequestUrl").value, null, null);
+
+      var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"]  
+        .getService(Components.interfaces.nsICookieManager);  
+
+      this.clearCookies();
+      var iter = cookieManager.enumerator;
+      while (iter.hasMoreElements()){
+        var cookie = iter.getNext();
+        if (cookie instanceof Components.interfaces.nsICookie){
+          var cookieHost = cookie.host.replace(/^\./, '');
+          if (cookieHost == requestURI.asciiHost)
+            this.addCookie(cookie.name, cookie.value);
+        }
+      }
     }
     catch (e) {
       util.mlog("doResponse INFO:" + e.name + ": " + e.message);

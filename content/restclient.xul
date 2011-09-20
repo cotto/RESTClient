@@ -97,7 +97,7 @@
         <caption label="&restclient.header.title;"/>
         <tree id="headerList" flex="1" height="90" seltype="multiple"
                    enableColumnDrag="true" disableKeyNavigation="true" editable="true"
-                   onkeypress="restclient.checkDeleteKeyPress(event)"
+                   onkeypress="restclient.checkDeleteKeyPressHeader(event)"
                    >
           <treecols>
              <treecol id="columnName" label="&header.list.name;" flex="1" persist="width ordinal hidden" editable="true"/>
@@ -111,6 +111,20 @@
       <row flex="3" >
         <caption label="&restclient.body.title;"/>
         <textbox id="tbRequestBody" flex="3" multiline="true" minheight="150px" oninput="restclient.requestBodyChange();"/>
+      </row>
+      <row>
+        <caption label="&restclient.cookies.title;"/>
+        <tree id="cookieList" flex="1" height="90" seltype="multiple"
+                   enableColumnDrag="true" disableKeyNavigation="true" editable="true"
+                   onkeypress="restclient.checkDeleteKeyPressCookies(event)"
+                   >
+          <treecols>
+             <treecol id="columnName" label="&cookie.list.name;" flex="1" persist="width ordinal hidden" editable="true"/>
+             <splitter class="tree-splitter"/>
+             <treecol id="columnValue" label="&cookie.list.value;" flex="5" persist="width ordinal hidden" editable="true"/>
+           </treecols>
+           <treechildren id="reqCookieChildren"/>
+        </tree>
       </row>
     </rows>
   </grid>
